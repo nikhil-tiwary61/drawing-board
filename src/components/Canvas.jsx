@@ -1,8 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
-export default function Canvas() {
+export default function Canvas({ currentColor }) {
   const canvasRef = useRef(null);
-  const [currentColor, setCurrentColor] = useState("#000000");
 
   const handleDraw = (e) => {
     const canvas = canvasRef.current;

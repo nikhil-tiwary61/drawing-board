@@ -4,3 +4,20 @@
   padding: 2rem;
   text-align: center;
 }
+
+canvas {
+  border: 1px solid #000;
+}
+
+/* Toolbar.css */
+.toolbar {
+  display: flex;
+  margin-top: 10px;
+}
+
+.color-option {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+}
