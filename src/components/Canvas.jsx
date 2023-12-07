@@ -9,8 +9,22 @@ export default function Canvas({ currentColor }) {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
+    ////making line smooth
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
+
+    //resize canvas window
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth * 0.8;
+      canvas.height = window.innerHeight * 0.8;
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+    };
   }, []);
 
   const startDrawing = (e) => {

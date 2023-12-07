@@ -12,15 +12,12 @@
 
 canvas {
   border: 1px solid #000;
-  height: 90vh;
-  width: 80vw;
+  cursor: crosshair;
 }
 
-/* Toolbar.css */
+/* toolbar styles */
 .toolbar {
   display: flex;
-  height: 90vh;
-  border: 1px solid #000;
 }
 
 .color-option {
