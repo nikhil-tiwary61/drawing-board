@@ -13,10 +13,10 @@ function App() {
 
   return (
     <>
-      <div>
-        <h1>DrawBoard App</h1>
-        <Canvas currentColor={currentColor} />
+      {/* <h1>DrawBoard App</h1> */}
+      <div id="components">
         <ToolBar changeColor={changeColor} />
+        <Canvas currentColor={currentColor} />
       </div>
     </>
   );

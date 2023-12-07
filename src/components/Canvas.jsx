@@ -47,8 +47,6 @@ export default function Canvas({ currentColor }) {
     <div>
       <canvas
         ref={canvasRef}
-        width={800}
-        height={600}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={endDrawing}

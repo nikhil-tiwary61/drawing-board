@@ -5,14 +5,22 @@
   text-align: center;
 }
 
+#components {
+  display: flex;
+  flex-direction: row;
+}
+
 canvas {
   border: 1px solid #000;
+  height: 90vh;
+  width: 80vw;
 }
 
 /* Toolbar.css */
 .toolbar {
   display: flex;
-  margin-top: 10px;
+  height: 90vh;
+  border: 1px solid #000;
 }
 
 .color-option {
