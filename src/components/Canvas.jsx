@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function Canvas({ currentColor }) {
+export default function Canvas({ currentColor, isErasing }) {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [prevPosition, setPrevPosition] = useState({ x: 0, y: 0 });
@@ -46,8 +46,8 @@ export default function Canvas({ currentColor }) {
     ctx.moveTo(prevPosition.x, prevPosition.y);
     ctx.lineTo(currentX, currentY);
 
-    ctx.strokeStyle = currentColor;
-    ctx.lineWidth = 5; //to be changed into dynamic value
+    ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
+    ctx.lineWidth = isErasing ? 40 : 5; //to be changed into dynamic value
     ctx.stroke();
 
     setPrevPosition({ x: currentX, y: currentY });
