@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function Canvas({ currentColor, isErasing, fontSize }) {
+export default function Canvas({
+  currentColor,
+  isErasing,
+  fontSize,
+  eraserSize,
+}) {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [prevPosition, setPrevPosition] = useState({ x: 0, y: 0 });
@@ -47,7 +52,7 @@ export default function Canvas({ currentColor, isErasing, fontSize }) {
     ctx.lineTo(currentX, currentY);
 
     ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-    ctx.lineWidth = isErasing ? 40 : fontSize; //to be changed into dynamic value
+    ctx.lineWidth = isErasing ? eraserSize : fontSize;
     ctx.stroke();
 
     setPrevPosition({ x: currentX, y: currentY });
@@ -61,6 +66,7 @@ export default function Canvas({ currentColor, isErasing, fontSize }) {
     <div>
       <canvas
         ref={canvasRef}
+        className={isErasing ? "eraser" : "pen"}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={endDrawing}

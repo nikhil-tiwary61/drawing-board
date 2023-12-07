@@ -12,7 +12,12 @@
 
 canvas {
   border: 1px solid #000;
-  cursor: crosshair;
+}
+.pen {
+  cursor: url(./assets/pen.png) 0 60, auto;
+}
+.eraser {
+  cursor: url(./assets/eraser.png) 0 60, auto;
 }
 
 /* toolbar styles */
