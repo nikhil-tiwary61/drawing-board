@@ -1,25 +1,44 @@
 import "./App.css";
-import { useState } from "react";
+import { useReducer } from "react";
 import Canvas from "./components/Canvas";
 import ToolBar from "./components/ToolBar";
 
+const initialState = {
+  currentColor: "#000000",
+  isErasing: false,
+  fontSize: 5,
+  eraserSize: 40,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "CHANGE_COLOR":
+      return { ...state, currentColor: action.payload };
+    case "CHANGE_ERASER":
+      return { ...state, isErasing: action.payload };
+    case "CHANGE_FONT_SIZE":
+      return { ...state, fontSize: action.payload };
+    case "CHANGE_ERASER_SIZE":
+      return { ...state, eraserSize: action.payload };
+    default:
+      return state;
+  }
+};
+
 function App() {
-  const [currentColor, setCurrentColor] = useState("#000000");
-  const [isErasing, setIsErasing] = useState(false);
-  const [fontSize, setFontSize] = useState(5);
-  const [eraserSize, setEraserSize] = useState(40);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   function changeColor(color) {
-    setCurrentColor(color);
+    dispatch({ type: "CHANGE_COLOR", payload: color });
   }
   function changeEraser(boolean) {
-    boolean ? setIsErasing(true) : setIsErasing(false);
+    dispatch({ type: "CHANGE_ERASER", payload: boolean });
   }
   function changeFontSize(e) {
-    setFontSize(e.target.value);
+    dispatch({ type: "CHANGE_FONT_SIZE", payload: e.target.value });
   }
   function changeEraserSize(e) {
-    setEraserSize(e.target.value);
+    dispatch({ type: "CHANGE_ERASER_SIZE", payload: e.target.value });
   }
 
   return (
@@ -29,16 +48,16 @@ function App() {
         <ToolBar
           changeColor={changeColor}
           changeEraser={changeEraser}
-          fontSize={fontSize}
+          fontSize={state.fontSize}
           changeFontSize={changeFontSize}
-          eraserSize={eraserSize}
+          eraserSize={state.eraserSize}
           changeEraserSize={changeEraserSize}
         />
         <Canvas
-          currentColor={currentColor}
-          isErasing={isErasing}
-          fontSize={fontSize}
-          eraserSize={eraserSize}
+          currentColor={state.currentColor}
+          isErasing={state.isErasing}
+          fontSize={state.fontSize}
+          eraserSize={state.eraserSize}
         />
       </div>
     </>
