@@ -69,6 +69,24 @@ export default function Canvas({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
 
+  const printCanvas = () => {
+    const canvas = canvasRef.current.toDataURL();
+
+    const windowContent = "<!DOCTYPE html>";
+    const printWindow = window.open("", "_blank");
+
+    printWindow.document.open();
+    printWindow.document.write(
+      `${windowContent}<html><head><title>Print Canvas</title></head><body><img src="${canvas}" /></body></html>`
+    );
+    printWindow.document.close();
+
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 400);
+  };
+
   return (
     <div>
       <canvas
@@ -80,6 +98,7 @@ export default function Canvas({
         onMouseOut={endDrawing}
       />
       <button onClick={clearCanvas}>Clear Canvas</button>
+      <button onClick={printCanvas}>Print Canvas</button>
     </div>
   );
 }
