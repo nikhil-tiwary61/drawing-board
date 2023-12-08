@@ -32,39 +32,42 @@ export default function Canvas({
     };
   }, []);
 
-  const startDrawing = (e) => {
+  const handleStartDrawing = (e) => {
     dispatch({
       type: "START_DRAWING",
       payload: { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY },
     });
   };
 
-  const draw = (e) => {
+  const handleDrawing = (e) => {
     if (state.isDrawing) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
       const currentX = e.nativeEvent.offsetX;
       const currentY = e.nativeEvent.offsetY;
-
-      ctx.beginPath();
-      ctx.moveTo(state.prevPosition.x, state.prevPosition.y);
-      ctx.lineTo(currentX, currentY);
-
-      ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-      ctx.lineWidth = isErasing ? eraserSize : fontSize;
-      ctx.stroke();
 
       dispatch({
         type: "START_DRAWING",
         payload: { x: currentX, y: currentY },
       });
+      drawLine(currentX, currentY);
     }
   };
 
-  const endDrawing = () => {
+  const handleEndDrawing = () => {
     if (state.isDrawing) {
       dispatch({ type: "END_DRAWING" });
     }
+  };
+
+  const drawLine = (x, y) => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.moveTo(state.prevPosition.x, state.prevPosition.y);
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
+    ctx.lineWidth = isErasing ? eraserSize : fontSize;
+    ctx.stroke();
   };
 
   const clearCanvas = () => {
@@ -97,10 +100,10 @@ export default function Canvas({
       <canvas
         ref={canvasRef}
         className={isErasing ? "eraser" : "pen"}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={endDrawing}
-        onMouseOut={endDrawing}
+        onMouseDown={handleStartDrawing}
+        onMouseMove={handleDrawing}
+        onMouseUp={handleEndDrawing}
+        onMouseOut={handleEndDrawing}
       />
       <button onClick={clearCanvas}>Clear Canvas</button>
       <button onClick={printCanvas}>Print Canvas</button>
