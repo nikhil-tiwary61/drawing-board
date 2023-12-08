@@ -9,12 +9,38 @@ export default function ToolBar({
   eraserSize,
   changeEraserSize,
 }) {
-  const colors = ["#000000", "#ff0000", "#00ff00", "#0000ff", "#ffff00"];
+  const colors = [
+    "#FF0000",
+    "#FFA500",
+    "#FFFF00",
+    "#008000",
+    "#0000FF",
+    "#800080",
+    "#000000",
+    "#C0C0C0",
+    "#808080",
+    "#800000",
+    "#FFC0CB",
+    "#FFD700",
+    "#00FF00",
+    "#00FFFF",
+    "#000080",
+    "#FF00FF",
+    "#FF6347",
+    "#A52A2A",
+    "#D2691E",
+    "#FF8C00",
+    "#006400",
+    "#8B008B",
+    "#4B0082",
+    "#008080",
+    "#8A2BE2",
+  ];
 
   return (
     <div className="toolbox">
+      <div>Colors:</div>
       <div className="toolbar">
-        <span>Colors:</span>
         {colors.map((color, index) => {
           return (
             <div

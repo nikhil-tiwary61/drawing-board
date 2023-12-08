@@ -45,7 +45,7 @@ export default function Canvas({
       const currentY = e.nativeEvent.offsetY;
 
       dispatch({
-        type: "START_DRAWING",
+        type: "DRAW",
         payload: { x: currentX, y: currentY },
       });
       drawLine(currentX, currentY);

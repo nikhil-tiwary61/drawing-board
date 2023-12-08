@@ -23,6 +23,9 @@ canvas {
 /* toolbar styles */
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 4px;
+  margin-bottom: 5px;
 }
 
 .color-option {
