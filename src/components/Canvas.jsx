@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef } from "react";
+import { canvasReducer, initialState } from "../reducers/canvasReducer";
 
 export default function Canvas({
   currentColor,
@@ -7,8 +8,7 @@ export default function Canvas({
   eraserSize,
 }) {
   const canvasRef = useRef(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [prevPosition, setPrevPosition] = useState({ x: 0, y: 0 });
+  const [state, dispatch] = useReducer(canvasReducer, initialState);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -33,40 +33,45 @@ export default function Canvas({
   }, []);
 
   const startDrawing = (e) => {
-    setIsDrawing(true);
-    setPrevPosition({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
+    dispatch({
+      type: "START_DRAWING",
+      payload: { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY },
+    });
   };
 
   const draw = (e) => {
-    if (!isDrawing) return;
+    if (state.isDrawing) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      const currentX = e.nativeEvent.offsetX;
+      const currentY = e.nativeEvent.offsetY;
 
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.moveTo(state.prevPosition.x, state.prevPosition.y);
+      ctx.lineTo(currentX, currentY);
 
-    //Get mouse coordinates
-    const currentX = e.nativeEvent.offsetX;
-    const currentY = e.nativeEvent.offsetY;
+      ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
+      ctx.lineWidth = isErasing ? eraserSize : fontSize;
+      ctx.stroke();
 
-    ctx.beginPath();
-    ctx.moveTo(prevPosition.x, prevPosition.y);
-    ctx.lineTo(currentX, currentY);
-
-    ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-    ctx.lineWidth = isErasing ? eraserSize : fontSize;
-    ctx.stroke();
-
-    setPrevPosition({ x: currentX, y: currentY });
+      dispatch({
+        type: "START_DRAWING",
+        payload: { x: currentX, y: currentY },
+      });
+    }
   };
 
   const endDrawing = () => {
-    setIsDrawing(false);
+    if (state.isDrawing) {
+      dispatch({ type: "END_DRAWING" });
+    }
   };
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    dispatch({ type: "CLEAR_DRAWING" });
   };
 
   const printCanvas = () => {
