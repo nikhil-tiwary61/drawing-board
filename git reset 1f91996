@@ -1,0 +1,23 @@
+[33m1f91996[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m refactor: separate drawing shapes into another utils folder for bettwe maintainability
+[33m523cebe[m feat: add draw-a-straight-line feature
+[33m08d25b4[m feat: add draw-a-circle feature
+[33m585aabe[m feat: add draw-a-rectangle feature
+[33mf5ae6ce[m feat: add color picker and remove the hard coded colors
+[33mb7c0fe0[m chore: add react-colorful library
+[33m240257f[m style: add styles to ToolBar and Canvas components and refactored them into separate files
+[33ma76ac1a[m add more colors and change dispatch of handleDrawing function
+[33m296b4d0[m refactor: add reducer to app component to manage all states better
+[33m5b4487d[m refactor: separate function for drawLine from handleDrawing to separate smaller task
+[33mb3c91fe[m refactor: use useReducer to simplify the state management in the Canvas component
+[33m1050a56[m feat: add print canvas feature
+[33mf5bad62[m feat: add clear canvas feature on a button click
+[33ma232f26[m feat: add slider to change the size of eraser
+[33m305f442[m feat: add slider to change the width of the strokes on canvas
+[33m016b387[m feat: add eraser to clean up the canvas
+[33meb8fe92[m fix: separation in canvas window adjustment
+[33m8e7fc3e[m add style to app.js for better UX
+[33mf67548c[m feat: remove jitters during drawing by using curve smoothing using Bezier Curves
+[33m2320efb[m feat: drawing starts only with click and drag of the mouse
+[33m2960379[m feat: add ToolBar component and add basic style to it
+[33ma72a508[m feat: add Canvas component
+[33m89505f7[m chore: initialize app with vite and react

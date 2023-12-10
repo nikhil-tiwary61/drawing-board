@@ -5,18 +5,23 @@ import { HexColorPicker } from "react-colorful";
 
 export default function ToolBar({
   changeColor,
-  changeEraser,
   fontSize,
   changeFontSize,
   eraserSize,
   changeEraserSize,
   changeShape,
+  changeTool,
 }) {
   return (
     <div className="toolbox">
       <h1>DrawBoard</h1>
       <HexColorPicker onChange={changeColor} />
-      <button onClick={() => changeEraser(false)}>
+      <button
+        onClick={() => {
+          changeTool("Pen");
+          changeShape("FreeStyle");
+        }}
+      >
         <img src={pen} alt="Pen" />
       </button>
       <div>
@@ -29,7 +34,12 @@ export default function ToolBar({
         />
         {fontSize}
       </div>
-      <button onClick={() => changeEraser(true)}>
+      <button
+        onClick={() => {
+          changeTool("Eraser");
+          changeShape(null);
+        }}
+      >
         <img src={eraser} alt="Eraser" />
       </button>
       <div>
@@ -43,12 +53,38 @@ export default function ToolBar({
         {eraserSize}
       </div>
       <div>
-        <button onClick={() => changeShape("FreeStyle")}>Line</button>
-        <button onClick={() => changeShape("Straight Line")}>
+        <button
+          onClick={() => {
+            changeShape("FreeStyle");
+            changeTool("Pen");
+          }}
+        >
+          Line
+        </button>
+        <button
+          onClick={() => {
+            changeShape("Straight Line");
+            changeTool("Pen");
+          }}
+        >
           Straight Line
         </button>
-        <button onClick={() => changeShape("Rectangle")}>Rectangle</button>
-        <button onClick={() => changeShape("Circle")}>Circle</button>
+        <button
+          onClick={() => {
+            changeShape("Rectangle");
+            changeTool("Pen");
+          }}
+        >
+          Rectangle
+        </button>
+        <button
+          onClick={() => {
+            changeShape("Circle");
+            changeTool("Pen");
+          }}
+        >
+          Circle
+        </button>
       </div>
     </div>
   );

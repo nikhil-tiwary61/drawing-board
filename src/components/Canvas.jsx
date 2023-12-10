@@ -3,13 +3,7 @@ import { useEffect, useReducer, useRef } from "react";
 import { canvasReducer, initialState } from "../reducers/canvasReducer";
 import { drawLine, drawRectangle, drawCircle } from "../utils/drawingUtils";
 
-export default function Canvas({
-  currentColor,
-  isErasing,
-  fontSize,
-  eraserSize,
-  shape,
-}) {
+export default function Canvas({ color, fontSize, eraserSize, shape, tool }) {
   const canvasRef = useRef(null);
   const startXRef = useRef(null);
   const startYRef = useRef(null);
@@ -58,18 +52,19 @@ export default function Canvas({
         type: "DRAW",
         payload: { x: currentX, y: currentY },
       });
-      if (shape == "FreeStyle") {
+      if (tool === "Pen" && shape == "FreeStyle") {
         drawLine(
           ctx,
           state.prevPosition.x,
           state.prevPosition.y,
           currentX,
           currentY,
-          isErasing,
-          currentColor,
-          fontSize,
-          eraserSize
+          color,
+          fontSize
         );
+      }
+      if (tool === "Eraser") {
+        erase(ctx, state.prevPosition.x, state.prevPosition.y, eraserSize);
       }
     }
   };
@@ -86,10 +81,8 @@ export default function Canvas({
         startYRef.current,
         currentX,
         currentY,
-        isErasing,
-        currentColor,
-        fontSize,
-        eraserSize
+        color,
+        fontSize
       );
     } else if (shape === "Circle") {
       drawCircle(
@@ -98,9 +91,7 @@ export default function Canvas({
         startYRef.current,
         currentX,
         currentY,
-        isErasing,
-        currentColor,
-        eraserSize,
+        color,
         fontSize
       );
     } else if (shape === "Straight Line") {
@@ -110,15 +101,22 @@ export default function Canvas({
         startYRef.current,
         currentX,
         currentY,
-        isErasing,
-        currentColor,
-        fontSize,
-        eraserSize
+        color,
+        fontSize
       );
     }
     if (state.isDrawing) {
       dispatch({ type: "END_DRAWING" });
     }
+  };
+
+  const erase = (ctx, x, y, eraserSize) => {
+    ctx.clearRect(
+      x - eraserSize / 2,
+      y - eraserSize / 2,
+      eraserSize,
+      eraserSize
+    );
   };
 
   const handleOutOfCanvas = () => {
@@ -154,7 +152,7 @@ export default function Canvas({
     <div className="canvas-container">
       <canvas
         ref={canvasRef}
-        className={`${isErasing ? "eraser" : "pen"} canvas`}
+        className={`${tool === "Pen" ? "pen" : "eraser"} canvas`}
         onMouseDown={handleStartDrawing}
         onMouseMove={handleDrawing}
         onMouseUp={handleEndDrawing}

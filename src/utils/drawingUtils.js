@@ -1,16 +1,6 @@
-export const drawLine = (
-  ctx,
-  startX,
-  startY,
-  endX,
-  endY,
-  isErasing,
-  currentColor,
-  fontSize,
-  eraserSize
-) => {
-  ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-  ctx.lineWidth = isErasing ? eraserSize : fontSize;
+export const drawLine = (ctx, startX, startY, endX, endY, color, fontSize) => {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = fontSize;
   ctx.beginPath();
   ctx.moveTo(startX, startY);
   ctx.lineTo(endX, endY);
@@ -23,13 +13,11 @@ export const drawRectangle = (
   startY,
   endX,
   endY,
-  isErasing,
-  currentColor,
-  fontSize,
-  eraserSize
+  color,
+  fontSize
 ) => {
-  ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-  ctx.lineWidth = isErasing ? eraserSize : fontSize;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = fontSize;
   ctx.beginPath();
   ctx.rect(startX, startY, endX - startX, endY - startY);
   ctx.stroke();
@@ -41,13 +29,11 @@ export const drawCircle = (
   startY,
   endX,
   endY,
-  isErasing,
-  currentColor,
-  fontSize,
-  eraserSize
+  color,
+  fontSize
 ) => {
-  ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-  ctx.lineWidth = isErasing ? eraserSize : fontSize;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = fontSize;
   const radius = Math.sqrt(
     Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2)
   );
