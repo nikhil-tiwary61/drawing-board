@@ -45,6 +45,7 @@ export default function ToolBar({
       <div>
         <button onClick={() => changeShape("FreeStyle")}>Line</button>
         <button onClick={() => changeShape("Rectangle")}>Rectangle</button>
+        <button onClick={() => changeShape("Circle")}>Circle</button>
       </div>
     </div>
   );
