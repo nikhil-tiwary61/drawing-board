@@ -40,6 +40,7 @@ export default function ToolBar({
 
   return (
     <div className="toolbox">
+      <h1>DrawBoard</h1>
       <div>Colors:</div>
       <div className="toolbar">
         {colors.map((color, index) => {

@@ -43,7 +43,6 @@ function App() {
 
   return (
     <>
-      {/* <h1>DrawBoard App</h1> */}
       <div id="components">
         <ToolBar
           changeColor={changeColor}
