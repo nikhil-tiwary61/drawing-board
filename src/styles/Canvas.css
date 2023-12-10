@@ -1,5 +1,4 @@
 .canvas-container {
-  background-color: #f8f8f8;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -9,10 +8,10 @@
   border-radius: 8px;
 }
 .pen {
-  cursor: url(./assets/pen.png) 0 60, auto;
+  cursor: url(../assets/pen.png) 0 60, auto;
 }
 .eraser {
-  cursor: url(./assets/eraser.png) 0 60, auto;
+  cursor: url(../assets/eraser.png) 0 60, auto;
 }
 
 .canvas-container button {

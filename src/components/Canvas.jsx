@@ -1,6 +1,7 @@
 import "../styles/Canvas.css";
 import { useEffect, useReducer, useRef } from "react";
 import { canvasReducer, initialState } from "../reducers/canvasReducer";
+import { drawLine, drawRectangle, drawCircle } from "../utils/drawingUtils";
 
 export default function Canvas({
   currentColor,
@@ -58,7 +59,17 @@ export default function Canvas({
         payload: { x: currentX, y: currentY },
       });
       if (shape == "FreeStyle") {
-        drawLine(ctx, currentX, currentY);
+        drawLine(
+          ctx,
+          state.prevPosition.x,
+          state.prevPosition.y,
+          currentX,
+          currentY,
+          isErasing,
+          currentColor,
+          fontSize,
+          eraserSize
+        );
       }
     }
   };
@@ -74,17 +85,35 @@ export default function Canvas({
         startXRef.current,
         startYRef.current,
         currentX,
-        currentY
+        currentY,
+        isErasing,
+        currentColor,
+        fontSize,
+        eraserSize
       );
     } else if (shape === "Circle") {
-      drawCircle(ctx, startXRef.current, startYRef.current, currentX, currentY);
-    } else if (shape === "Straight Line") {
-      drawStraightLine(
+      drawCircle(
         ctx,
         startXRef.current,
         startYRef.current,
         currentX,
-        currentY
+        currentY,
+        isErasing,
+        currentColor,
+        eraserSize,
+        fontSize
+      );
+    } else if (shape === "Straight Line") {
+      drawLine(
+        ctx,
+        startXRef.current,
+        startYRef.current,
+        currentX,
+        currentY,
+        isErasing,
+        currentColor,
+        fontSize,
+        eraserSize
       );
     }
     if (state.isDrawing) {
@@ -94,43 +123,6 @@ export default function Canvas({
 
   const handleOutOfCanvas = () => {
     dispatch({ type: "END_DRAWING" });
-  };
-
-  const drawLine = (ctx, x, y) => {
-    ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-    ctx.lineWidth = isErasing ? eraserSize : fontSize;
-    ctx.beginPath();
-    ctx.moveTo(state.prevPosition.x, state.prevPosition.y);
-    ctx.lineTo(x, y);
-    ctx.stroke();
-  };
-
-  const drawStraightLine = (ctx, startX, startY, endX, endY) => {
-    ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-    ctx.lineWidth = isErasing ? eraserSize : fontSize;
-    ctx.beginPath();
-    ctx.moveTo(startX, startY);
-    ctx.lineTo(endX, endY);
-    ctx.stroke();
-  };
-
-  const drawRectangle = (ctx, startX, startY, endX, endY) => {
-    ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-    ctx.lineWidth = isErasing ? eraserSize : fontSize;
-    ctx.beginPath();
-    ctx.rect(startX, startY, endX - startX, endY - startY);
-    ctx.stroke();
-  };
-
-  const drawCircle = (ctx, startX, startY, endX, endY) => {
-    ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
-    ctx.lineWidth = isErasing ? eraserSize : fontSize;
-    const radius = Math.sqrt(
-      Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2)
-    );
-    ctx.beginPath();
-    ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
-    ctx.stroke();
   };
 
   const clearCanvas = () => {
