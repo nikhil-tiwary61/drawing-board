@@ -8,6 +8,7 @@ const initialState = {
   isErasing: false,
   fontSize: 5,
   eraserSize: 40,
+  shape: "FreeStyle",
 };
 
 const reducer = (state, action) => {
@@ -20,6 +21,8 @@ const reducer = (state, action) => {
       return { ...state, fontSize: action.payload };
     case "CHANGE_ERASER_SIZE":
       return { ...state, eraserSize: action.payload };
+    case "CHANGE_SHAPE":
+      return { ...state, shape: action.payload };
     default:
       return state;
   }
@@ -40,6 +43,9 @@ function App() {
   function changeEraserSize(e) {
     dispatch({ type: "CHANGE_ERASER_SIZE", payload: e.target.value });
   }
+  function changeShape(val) {
+    dispatch({ type: "CHANGE_SHAPE", payload: val });
+  }
 
   return (
     <>
@@ -51,12 +57,14 @@ function App() {
           changeFontSize={changeFontSize}
           eraserSize={state.eraserSize}
           changeEraserSize={changeEraserSize}
+          changeShape={changeShape}
         />
         <Canvas
           currentColor={state.currentColor}
           isErasing={state.isErasing}
           fontSize={state.fontSize}
           eraserSize={state.eraserSize}
+          shape={state.shape}
         />
       </div>
     </>

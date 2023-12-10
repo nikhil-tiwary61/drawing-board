@@ -10,6 +10,7 @@ export default function ToolBar({
   changeFontSize,
   eraserSize,
   changeEraserSize,
+  changeShape,
 }) {
   return (
     <div className="toolbox">
@@ -40,6 +41,10 @@ export default function ToolBar({
           onChange={changeEraserSize}
         />
         {eraserSize}
+      </div>
+      <div>
+        <button onClick={() => changeShape("FreeStyle")}>Line</button>
+        <button onClick={() => changeShape("Rectangle")}>Rectangle</button>
       </div>
     </div>
   );

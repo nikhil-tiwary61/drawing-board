@@ -7,8 +7,11 @@ export default function Canvas({
   isErasing,
   fontSize,
   eraserSize,
+  shape,
 }) {
   const canvasRef = useRef(null);
+  const startXRef = useRef(null);
+  const startYRef = useRef(null);
   const [state, dispatch] = useReducer(canvasReducer, initialState);
 
   useEffect(() => {
@@ -38,9 +41,14 @@ export default function Canvas({
       type: "START_DRAWING",
       payload: { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY },
     });
+    startXRef.current = e.nativeEvent.offsetX;
+    startYRef.current = e.nativeEvent.offsetY;
   };
 
   const handleDrawing = (e) => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
     if (state.isDrawing) {
       const currentX = e.nativeEvent.offsetX;
       const currentY = e.nativeEvent.offsetY;
@@ -49,25 +57,49 @@ export default function Canvas({
         type: "DRAW",
         payload: { x: currentX, y: currentY },
       });
-      drawLine(currentX, currentY);
+      if (shape == "FreeStyle") {
+        drawLine(ctx, currentX, currentY);
+      }
     }
   };
 
-  const handleEndDrawing = () => {
+  const handleEndDrawing = (e) => {
+    if (shape === "Rectangle") {
+      const currentX = e.nativeEvent.offsetX;
+      const currentY = e.nativeEvent.offsetY;
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      drawRectangle(
+        ctx,
+        startXRef.current,
+        startYRef.current,
+        currentX,
+        currentY
+      );
+    }
     if (state.isDrawing) {
       dispatch({ type: "END_DRAWING" });
     }
   };
 
-  const drawLine = (x, y) => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+  const handleOutOfCanvas = () => {
+    dispatch({ type: "END_DRAWING" });
+  };
 
+  const drawLine = (ctx, x, y) => {
     ctx.beginPath();
     ctx.moveTo(state.prevPosition.x, state.prevPosition.y);
     ctx.lineTo(x, y);
     ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
     ctx.lineWidth = isErasing ? eraserSize : fontSize;
+    ctx.stroke();
+  };
+
+  const drawRectangle = (ctx, startX, startY, endX, endY) => {
+    ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
+    ctx.lineWidth = isErasing ? eraserSize : fontSize;
+    ctx.beginPath();
+    ctx.rect(startX, startY, endX - startX, endY - startY);
     ctx.stroke();
   };
 
@@ -104,7 +136,7 @@ export default function Canvas({
         onMouseDown={handleStartDrawing}
         onMouseMove={handleDrawing}
         onMouseUp={handleEndDrawing}
-        onMouseOut={handleEndDrawing}
+        onMouseOut={handleOutOfCanvas}
       />
       <button onClick={clearCanvas}>Clear Canvas</button>
       <button onClick={printCanvas}>Print Canvas</button>
