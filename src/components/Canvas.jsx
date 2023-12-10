@@ -1,3 +1,4 @@
+import "../styles/Canvas.css";
 import { useEffect, useReducer, useRef } from "react";
 import { canvasReducer, initialState } from "../reducers/canvasReducer";
 
@@ -96,10 +97,10 @@ export default function Canvas({
   };
 
   return (
-    <div>
+    <div className="canvas-container">
       <canvas
         ref={canvasRef}
-        className={isErasing ? "eraser" : "pen"}
+        className={`${isErasing ? "eraser" : "pen"} canvas`}
         onMouseDown={handleStartDrawing}
         onMouseMove={handleDrawing}
         onMouseUp={handleEndDrawing}

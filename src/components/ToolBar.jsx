@@ -1,3 +1,4 @@
+import "../styles/ToolBar.css";
 import pen from "../assets/pen.png";
 import eraser from "../assets/eraser.png";
 

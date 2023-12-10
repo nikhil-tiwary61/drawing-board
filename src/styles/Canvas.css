@@ -1,0 +1,28 @@
+.canvas-container {
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.canvas {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+.pen {
+  cursor: url(./assets/pen.png) 0 60, auto;
+}
+.eraser {
+  cursor: url(./assets/eraser.png) 0 60, auto;
+}
+
+.canvas-container button {
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease;
+  transition: transform 0.3s ease;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.canvas-container button:hover {
+  transform: scale(1.1);
+}
