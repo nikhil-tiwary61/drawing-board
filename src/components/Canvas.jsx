@@ -78,6 +78,14 @@ export default function Canvas({
       );
     } else if (shape === "Circle") {
       drawCircle(ctx, startXRef.current, startYRef.current, currentX, currentY);
+    } else if (shape === "Straight Line") {
+      drawStraightLine(
+        ctx,
+        startXRef.current,
+        startYRef.current,
+        currentX,
+        currentY
+      );
     }
     if (state.isDrawing) {
       dispatch({ type: "END_DRAWING" });
@@ -89,11 +97,20 @@ export default function Canvas({
   };
 
   const drawLine = (ctx, x, y) => {
+    ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
+    ctx.lineWidth = isErasing ? eraserSize : fontSize;
     ctx.beginPath();
     ctx.moveTo(state.prevPosition.x, state.prevPosition.y);
     ctx.lineTo(x, y);
+    ctx.stroke();
+  };
+
+  const drawStraightLine = (ctx, startX, startY, endX, endY) => {
     ctx.strokeStyle = isErasing ? "#ffffff" : currentColor;
     ctx.lineWidth = isErasing ? eraserSize : fontSize;
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(endX, endY);
     ctx.stroke();
   };
 
