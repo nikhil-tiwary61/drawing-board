@@ -23,16 +23,9 @@
   color: #fff;
 }
 
-.toolbar {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
-}
-
-.color-option {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
+.toolbox .react-colorful {
+  height: 150px;
+  width: 150px;
 }
 
 h1 {
