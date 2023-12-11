@@ -1,6 +1,10 @@
 import "../styles/ToolBar.css";
 import pen from "../assets/pen.png";
 import eraser from "../assets/eraser.png";
+import freestyle_line from "../assets/freestyle-line.png";
+import straight_line from "../assets/straight-line.png";
+import empty_rectangle from "../assets/empty-rectangle.png";
+import empty_circle from "../assets/empty-circle.png";
 import { HexColorPicker } from "react-colorful";
 
 export default function ToolBar({
@@ -59,7 +63,7 @@ export default function ToolBar({
             changeTool("Pen");
           }}
         >
-          Line
+          <img src={freestyle_line} alt="Line" />
         </button>
         <button
           onClick={() => {
@@ -67,7 +71,7 @@ export default function ToolBar({
             changeTool("Pen");
           }}
         >
-          Straight Line
+          <img src={straight_line} alt="Straight Line" />
         </button>
         <button
           onClick={() => {
@@ -75,7 +79,7 @@ export default function ToolBar({
             changeTool("Pen");
           }}
         >
-          Rectangle
+          <img src={empty_rectangle} alt="Rectangle" />
         </button>
         <button
           onClick={() => {
@@ -83,7 +87,7 @@ export default function ToolBar({
             changeTool("Pen");
           }}
         >
-          Circle
+          <img src={empty_circle} alt="Circle" />
         </button>
       </div>
     </div>
