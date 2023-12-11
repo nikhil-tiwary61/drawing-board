@@ -13,18 +13,22 @@ export default function ToolBar({
   changeFontSize,
   eraserSize,
   changeEraserSize,
+  shape,
   changeShape,
+  tool,
   changeTool,
 }) {
+  const handleToolChange = (tool, shape = null) => {
+    changeTool(tool);
+    changeShape(shape);
+  };
   return (
     <div className="toolbox">
       <h1>DrawBoard</h1>
       <HexColorPicker onChange={changeColor} />
       <button
-        onClick={() => {
-          changeTool("Pen");
-          changeShape("FreeStyle");
-        }}
+        className={tool === "Pen" ? "active" : ""}
+        onClick={() => handleToolChange("Pen", "FreeStyle")}
       >
         <img src={pen} alt="Pen" />
       </button>
@@ -39,10 +43,8 @@ export default function ToolBar({
         {fontSize}
       </div>
       <button
-        onClick={() => {
-          changeTool("Eraser");
-          changeShape(null);
-        }}
+        className={tool === "Eraser" ? "active" : ""}
+        onClick={() => handleToolChange("Eraser")}
       >
         <img src={eraser} alt="Eraser" />
       </button>
@@ -58,34 +60,26 @@ export default function ToolBar({
       </div>
       <div>
         <button
-          onClick={() => {
-            changeShape("FreeStyle");
-            changeTool("Pen");
-          }}
+          className={shape === "FreeStyle" ? "active" : ""}
+          onClick={() => handleToolChange("Pen", "FreeStyle")}
         >
           <img src={freestyle_line} alt="Line" />
         </button>
         <button
-          onClick={() => {
-            changeShape("Straight Line");
-            changeTool("Pen");
-          }}
+          className={shape === "Straight Line" ? "active" : ""}
+          onClick={() => handleToolChange("Pen", "Straight Line")}
         >
           <img src={straight_line} alt="Straight Line" />
         </button>
         <button
-          onClick={() => {
-            changeShape("Rectangle");
-            changeTool("Pen");
-          }}
+          className={shape === "Rectangle" ? "active" : ""}
+          onClick={() => handleToolChange("Pen", "Rectangle")}
         >
           <img src={empty_rectangle} alt="Rectangle" />
         </button>
         <button
-          onClick={() => {
-            changeShape("Circle");
-            changeTool("Pen");
-          }}
+          className={shape === "Circle" ? "active" : ""}
+          onClick={() => handleToolChange("Pen", "Circle")}
         >
           <img src={empty_circle} alt="Circle" />
         </button>

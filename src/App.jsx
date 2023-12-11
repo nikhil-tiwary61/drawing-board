@@ -56,7 +56,9 @@ function App() {
           changeFontSize={changeFontSize}
           eraserSize={state.eraserSize}
           changeEraserSize={changeEraserSize}
+          shape={state.shape}
           changeShape={changeShape}
+          tool={state.tool}
           changeTool={changeTool}
         />
         <Canvas
